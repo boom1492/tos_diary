@@ -32,15 +32,6 @@ class QuestCtrl {
       }
     }
     
-    $scope.test = function(){
-      for(var i = 0; i< $scope.$parent.quests.length; i++){
-        for(var j = 0; j < $scope.$parent.quests[i].compensations.length; j++){
-          $scope.$parent.quests[i].compensations[j].itemImgUrl = 'http://static.inven.co.kr/image_2011/site_image/tos/item/icon_item_expcard.png';
-          console.log($scope.$parent.quests[i].compensations[j].itemImgUrl);
-        }
-      }
-    }
-    
     $scope.priority = $cookies.get("questPriority");
 
     $scope.toggleOrder = function(){
