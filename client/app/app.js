@@ -1,0 +1,21 @@
+'use strict';
+
+angular.module('fullstackApp', [
+  'fullstackApp.auth',
+  'fullstackApp.admin',
+  'fullstackApp.constants',
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'btford.socket-io',
+  'ui.router',
+  'ui.bootstrap',
+  'validation.match',
+  'ngAside'
+])
+  .config(function($urlRouterProvider, $locationProvider) {
+    $urlRouterProvider
+      .otherwise('/');
+
+    $locationProvider.html5Mode(true);
+  });

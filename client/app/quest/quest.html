@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header">{{quest.map.mapName}}(Lv. {{quest.map.level}})</h3>
+      <!--<div class="nav col-md-6 col-lg-4 col-sm-12 list-group" ng-repeat="quest in quest.quests">
+        <a class="list-group-item">
+          <strong>{{quest.questName}} </strong><span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}">{{(quest.type==1)?'메인':(quest.type==2)?'서브':'반복'}}</span><button class="btn btn-primary">Done</button>
+        </a>
+      </div>
+      -->
+      <a class="col-lg-8" href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'map'" target="_blank">
+        <img style="width:100%; align:center; margin-bottom:10px;" src="{{quest.map.imgUrl}}"></img>
+        
+      </a>
+    
+      <div ng-show="quests.length == 0">퀘스트가 정보가 존재하지 않습니다.</div>
+      <!--<div class="list-group">
+        <div class="list-group-item col-md-6 col-lg-4 col-sm-12" ng-repeat="quest in quests">
+          <div><span style='width:30px; display:inline-block;'>{{quest.level}}</span>{{quest.questName}}<span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}">{{(quest.type==1)?'메인':(quest.type==2)?'서브':'반복'}}</span>
+          
+            <span class="btn" ng-class="{'btn-danger': quest.done, 'btn-primary': quest.done == false || quest.done == undefined}" style="float:right; margin:-8px -13px" ng-click="check(quest._id)">{{quest.done?'Undo':'Done'}}</span> </div>
+          <p>
+          <div>NPC: {{quest.npcName}}</div>
+            <div>보상 : <span ng-repeat="compensation in quest.compensations"><img ng-src="{{compensation.itemImgUrl}}" width='24px' height='24px' uib-tooltip='{{compensation.itemName}} x{{compensation.numOfItems}}'></span>
+            </div>
+          </p>
+        </a>
+      </div>
+-->
+      <div style="padding: 0px; margin-bottom:10px;" class="col-md-12 col-lg-4 col-sm-12">
+        <div class="col-md-4 col-lg-12 col-sm-4"  ng-repeat="quest in quests | orderBy: (priority==='map')?'-done':'done'" style="padding: 0px;">
+          <div class="panel panel-default" style="margin:2px;" ng-class="{'completed': quest.done}">
+            <div class="panel-heading">
+              <h3 class="panel-title" style="overflow:hidden;">
+                <div style="display:inline;">
+                  <span style='width:30px; display:inline-block;'>{{quest.level}}</span><span>{{quest.questName}} </span><span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}" style="padding:.2em .6em .2em !important">{{(quest.type==1)?'Main':(quest.type==2)?'Sub':'Repeat'}}</span>
+                </div>
+                <div style="float:right; font-size:1.2em">
+                  <a class="glyphicon glyphicon-paperclip" aria-hidden="true" ng-href="{{quest.detailsUrl}}" target="_blank" uib-tooltip="퀘스트 정보"></a>
+                  <a class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="check(quest._id)" ng-class="{'notCompleted': !quest.done}" style="margin-left:5px;" uib-tooltip="완료"></a>
+                </div>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div>NPC: {{quest.npcName}}</div>
+              <div>보상 : <span ng-repeat="compensation in quest.compensations"><img ng-src="{{compensation.itemImgUrl}}" width='24px' height='24px' uib-tooltip='{{compensation.itemName}} x{{compensation.numOfItems}}'></span>
+
+              <!--<span class="btn" ng-class="{'btn-danger': quest.done, 'btn-primary': quest.done == false || quest.done == undefined}" style="float:right;" ng-click="check(quest._id)">{{quest.done?'Undo':'Done'}}</span>  -->
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <a class="col-lg-8" href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'quest' || priority === undefined" target="_blank">
+        <img style="width:100%; align:center;" src="{{quest.map.imgUrl}}"></img>
+        
+      </a>
+    
+    </div>
+  
+      <div style="text-align:center; margin-top:30px">
+        <button class="btn btn-default" ng-click="toggleOrder()">퀘스트/지도 표시 순서 변경</button>
+      </div>
+  </div>
+
+</div>
