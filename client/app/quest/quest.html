@@ -8,10 +8,11 @@
         </a>
       </div>
       -->
-      <a class="col-lg-8" href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'map'" target="_blank">
-        <img style="width:100%; align:center; margin-bottom:10px;" src="{{quest.map.imgUrl}}"></img>
-        
-      </a>
+      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true'}" style="text-align:center">
+        <a href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'map'" target="_blank">
+          <img style="width:100%; max-width:700px; margin-top:10px" src="{{quest.map.imgUrl}}"></img>
+        </a>
+      </div>
     
       <div ng-show="quests.length == 0">퀘스트가 정보가 존재하지 않습니다.</div>
       <!--<div class="list-group">
@@ -27,8 +28,8 @@
         </a>
       </div>
 -->
-      <div style="padding: 0px; margin-bottom:10px;" class="col-md-12 col-lg-4 col-sm-12">
-        <div class="col-md-4 col-lg-12 col-sm-4"  ng-repeat="quest in quests | orderBy: (priority==='map')?'-done':'done'" style="padding: 0px;">
+      <div style="padding: 0px; margin-bottom:10px; margin-top:10px;" class="col-md-12 col-lg-4 col-sm-12">
+        <div class="col-md-6 col-lg-12 col-sm-6"  ng-repeat="quest in quests | orderBy: (priority==='map')?'-done':'done'" style="padding: 0px;">
           <div class="panel panel-default" style="margin:2px;" ng-class="{'completed': quest.done}">
             <div class="panel-heading">
               <h3 class="panel-title" style="overflow:hidden;">
@@ -52,17 +53,21 @@
         </div>
         
       </div>
-      
-      <a class="col-lg-8" href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'quest' || priority === undefined" target="_blank">
-        <img style="width:100%; align:center;" src="{{quest.map.imgUrl}}"></img>
-        
-      </a>
+      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true'}" style="text-align:center">
+        <a href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'quest' || priority === undefined" target="_blank">
+          <img style="width:100%; max-width:700px; margin-top:10px" src="{{quest.map.imgUrl}}" >
+        </a>
+      </div>
     
     </div>
-  
-      <div style="text-align:center; margin-top:30px">
-        <button class="btn btn-default" ng-click="toggleOrder()">퀘스트/지도 표시 순서 변경</button>
-      </div>
+
+    <div style="text-align:center; margin-top:30px">
+      <button class="btn btn-default" ng-click="toggleOrder()">퀘스트/지도 표시 순서 변경</button>
+      <button class="btn btn-default" ng-click="toggleFixedMap()">지도 하단 고정</button>
+    </div>
+
+    <div ng-show="fixedMap === 'true'" style="height:500px;">
+    </div>
   </div>
 
 </div>
