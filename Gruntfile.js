@@ -109,7 +109,7 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.server %>/**/*.{js,json}'],
         tasks: ['express:dev', 'wait'],
         options: {
-          livereload: true,
+          livereload: false,
           spawn: false //Without this option specified express won't be reloaded
         }
       },
