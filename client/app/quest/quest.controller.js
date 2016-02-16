@@ -47,6 +47,21 @@ class QuestCtrl {
         $scope.priority = 'map';
       }
     }
+    
+    $scope.fixedMap = $cookies.get("fixedMap");
+    $scope.toggleFixedMap = function(){
+      $scope.fixedMap = $cookies.get("fixedMap");
+      
+      //console.log("before:"+$scope.fixedMap);
+      if($scope.fixedMap === undefined || $scope.fixedMap === 'true'){
+        $cookies.put('fixedMap', 'false');
+        $scope.fixedMap = 'false';
+      }    
+      else{
+        $cookies.put('fixedMap', 'true');
+        $scope.fixedMap = 'true';
+      }
+    }
   }
 
 }
