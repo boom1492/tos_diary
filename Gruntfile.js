@@ -251,7 +251,7 @@ module.exports = function (grunt) {
       dist: {
         src: [
           '<%= yeoman.dist %>/<%= yeoman.client %>/!(bower_components){,*/}*.{js,css}',
-          '<%= yeoman.dist %>/<%= yeoman.client %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          //'<%= yeoman.dist %>/<%= yeoman.client %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
           '<%= yeoman.dist %>/<%= yeoman.client %>/assets/fonts/*'
         ]
       }
@@ -377,6 +377,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
+            'components/**/*.html',
             'assets/images/{,*/}*.{webp}',
             'assets/fonts/**/*',
             'index.html'
@@ -580,7 +581,9 @@ module.exports = function (grunt) {
     },
 
     injector: {
-      options: {},
+      options: {
+        
+      },
       // Inject application script files into index.html (doesn't include bower)
       scripts: {
         options: {
