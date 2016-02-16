@@ -64,7 +64,6 @@ export function index(req, res) {
   if(req.query.text == undefined){
     req.query.text = '';
   }
-  console.log(req.query.text);
   if(req.query.sort === undefined || req.query.sort === 'word'){
     Map.find({"mapName": { "$regex": req.query.text, "$options": "i" }}).sort('questName').execAsync()
       .then(respondWithResult(res))
