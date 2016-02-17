@@ -16,6 +16,7 @@ class MapController {
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('map');
     });*/
+    
   }
 
 }

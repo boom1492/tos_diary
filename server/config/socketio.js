@@ -17,10 +17,12 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  
+  require('../api/comment/comment.socket').register(socket);
   require('../api/character/character.socket').register(socket);
   require('../api/quest/quest.socket').register(socket);
   require('../api/map/map.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
+  //require('../api/thing/thing.socket').register(socket);
 
 }
 

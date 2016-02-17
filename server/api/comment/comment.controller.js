@@ -1,16 +1,16 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/maps              ->  index
- * POST    /api/maps              ->  create
- * GET     /api/maps/:id          ->  show
- * PUT     /api/maps/:id          ->  update
- * DELETE  /api/maps/:id          ->  destroy
+ * GET     /api/comments              ->  index
+ * POST    /api/comments              ->  create
+ * GET     /api/comments/:id          ->  show
+ * PUT     /api/comments/:id          ->  update
+ * DELETE  /api/comments/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Map from './map.model';
+import Comment from './comment.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -29,6 +29,14 @@ function saveUpdates(updates) {
         return updated;
       });
   };
+}
+
+function checkOwnerEntity(res){
+  return function(entity){
+    if(entity){
+      console.log();
+    }
+  }
 }
 
 function removeEntity(res) {
@@ -59,44 +67,55 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Maps
+// Gets a list of Comments
 export function index(req, res) {
-  Map.findAsync()
+  Comment.find().populate('author').populate('mapId').limit(10).execAsync()
+    .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
-    .catch(handleError(res));  
-
+    .catch(handleError(res));
+  
 }
 
-// Gets a single Map from the DB
+// Gets a single Comment from the DB
 export function show(req, res) {
-  Map.findByIdAsync(req.params.id)
+  Comment.find({mapId:req.params.id}).populate('author').populate('mapId').execAsync()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Map in the DB
+// Creates a new Comment in the DB
 export function create(req, res) {
-  Map.createAsync(req.body)
+  if(req.user._id == undefined){
+    return res.status(403).end();
+  }
+  if(req.body.message.length > 200){
+    return res.status(400).end();
+  }
+  req.body['author'] = req.user._id;
+  req.body['written'] = new Date();
+  
+  Comment.createAsync(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Map in the DB
+// Updates an existing Comment in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Map.findByIdAsync(req.params.id)
+  Comment.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Map from the DB
+// Deletes a Comment from the DB
 export function destroy(req, res) {
-  Map.findByIdAsync(req.params.id)
+  
+  Comment.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
