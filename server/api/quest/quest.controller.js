@@ -63,7 +63,6 @@ function handleError(res, statusCode) {
 // Gets a list of Quests
 export function index(req, res) {
   Quest.findAsync({mapId:req.query.mapId})
-    .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

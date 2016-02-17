@@ -4,19 +4,62 @@
 
 class QuestCtrl {
 
-  constructor($http, $scope, socket, $location, $cookies) {
+  constructor($http, $scope, socket, $location, $cookies, Auth) {
     this.$http = $http;
     //this.quests = [];
     this.map = {};
-    this.mapId = $location.search().mapId;
-    $http.get('/api/quests?mapId=' + this.mapId).then(response => {
+    $scope.mapId = $location.search().mapId;
+    $scope.getCurrentUser = Auth.getCurrentUser;
+    
+    $http.get('/api/quests?mapId=' + $scope.mapId).then(response => {
+      
       $scope.$parent.quests = response.data;
       for(var i = 0; i< $scope.$parent.quests.length; i++){
         $scope.$parent.quests[i].done = $cookies.get('quest.' + $scope.$parent.quests[i]._id);
+        $scope.$parent.quests[i].selectionCnt = $scope.$parent.quests[i].compensations.filter(o=>o.type =='선택').length;
+        
       }
+      
+    }, response =>{
+      
+      $location.path('/');
+      $location.url('/');
     });
+    
+    $http.get('/api/comments/' + $scope.mapId).then(response => {
+      $scope.$parent.comments = response.data;
 
-    $http.get('/api/maps/' + this.mapId).then(response =>{
+      socket.syncUpdates('comment', $scope.$parent.comments);
+
+    }); 
+    
+    $scope.writeComment = function(){
+      if($scope.commentMessage.length < 10){
+        alert('메시지가 너무 짧습니다.');
+        return;
+      }
+      $http.post('/api/comments', { message: $scope.commentMessage, mapId: $scope.mapId }).then(response=>{
+        
+        $scope.commentMessage = '';
+      }, response=>{
+        if(response.status == 400){
+          alert('메시지는 200자를 초과할 수 없습니다.');
+        }
+      });
+      
+    }
+    
+    $scope.removeComment = function(comment){
+      $http.delete('/api/comments/' + comment._id);
+      
+    }
+    
+    $scope.$on('$destroy', function() {
+      socket.unsyncUpdates('comment');
+    });
+    
+    
+    $http.get('/api/maps/' + $scope.mapId).then(response =>{
       this.map = response.data;
     });
     
@@ -62,6 +105,7 @@ class QuestCtrl {
         $scope.fixedMap = 'false';
       }
     }
+    
   }
 
 }

@@ -6,6 +6,18 @@ class MainController {
 
   constructor($http, $scope, socket) {
     this.$http = $http;
+        
+  
+    $http.get('/api/comments').then(response => {
+      $scope.$parent.comments = response.data;
+      socket.syncUpdates('comment', $scope.$parent.comments);
+
+    }); 
+    
+    $scope.$on('$destroy', function() {
+      socket.unsyncUpdates('comment');
+    });
+    
     /*
     this.awesomeThings = [];
 
@@ -17,7 +29,7 @@ class MainController {
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
     });
-    */
+  */  
   }
 /*
   addThing() {
