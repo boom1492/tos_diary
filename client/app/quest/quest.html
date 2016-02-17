@@ -8,7 +8,7 @@
         </a>
       </div>
       -->
-      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true'}" style="text-align:center">
+      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8' : fixedMap == 'false'}" style="text-align:center">
         <a href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'map'" target="_blank">
           <img style="width:100%; max-width:700px; margin-top:10px" src="{{quest.map.imgUrl}}"></img>
         </a>
