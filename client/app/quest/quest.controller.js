@@ -53,13 +53,13 @@ class QuestCtrl {
       $scope.fixedMap = $cookies.get("fixedMap");
       
       //console.log("before:"+$scope.fixedMap);
-      if($scope.fixedMap === undefined || $scope.fixedMap === 'true'){
-        $cookies.put('fixedMap', 'false');
-        $scope.fixedMap = 'false';
-      }    
-      else{
+      if($scope.fixedMap === undefined || $scope.fixedMap === 'false'){
         $cookies.put('fixedMap', 'true');
         $scope.fixedMap = 'true';
+      }    
+      else{
+        $cookies.put('fixedMap', 'false');
+        $scope.fixedMap = 'false';
       }
     }
   }
