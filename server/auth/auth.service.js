@@ -19,6 +19,7 @@ export function isAuthenticated() {
   return compose()
     // Validate jwt
     .use(function(req, res, next) {
+    console.log(req.headers);
       // allow access_token to be passed through query parameter as well
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
@@ -27,6 +28,7 @@ export function isAuthenticated() {
     })
     // Attach user to request
     .use(function(req, res, next) {
+    console.log(req.headers);
       User.findByIdAsync(req.user._id)
         .then(user => {
           if (!user) {
