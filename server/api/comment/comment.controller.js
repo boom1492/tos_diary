@@ -69,7 +69,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of Comments
 export function index(req, res) {
-  Comment.find().populate('author', 'name _id').populate('mapId').limit(10).execAsync()
+  Comment.find().populate('author', 'name _id role').populate('mapId').limit(10).execAsync()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -78,7 +78,7 @@ export function index(req, res) {
 
 // Gets a single Comment from the DB
 export function show(req, res) {
-  Comment.find({mapId:req.params.id}).populate('author', 'name _id').populate('mapId').execAsync()
+  Comment.find({mapId:req.params.id}).populate('author', 'name _id role').populate('mapId').execAsync()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
