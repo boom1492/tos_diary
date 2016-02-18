@@ -25,7 +25,7 @@ for (var e in events) {
 
 function emitEvent(event) {
   return function(doc) {
-    Comment.findById(doc._id).populate('author').populate('mapId').exec(function(err, comment){
+    Comment.findById(doc._id).populate('author', 'name _id').populate('mapId').exec(function(err, comment){
     if(comment == null){
       CommentEvents.emit(event + ':' + doc._id, doc);
       CommentEvents.emit(event, doc);      
