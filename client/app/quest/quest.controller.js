@@ -11,12 +11,32 @@ class QuestCtrl {
     $scope.mapId = $location.search().mapId;
     $scope.getCurrentUser = Auth.getCurrentUser;
     
+    $scope.$parent.resultExpCard = [];
+    
     $http.get('/api/quests?mapId=' + $scope.mapId).then(response => {
+    
+      var tmpResultExpCard = [];
       
       $scope.$parent.quests = response.data;
-      for(var i = 0; i< $scope.$parent.quests.length; i++){
+      
+      for(var i = 0; i < $scope.$parent.quests.length; i++){
         $scope.$parent.quests[i].done = $cookies.get('quest.' + $scope.$parent.quests[i]._id);
         $scope.$parent.quests[i].selectionCnt = $scope.$parent.quests[i].compensations.filter(o=>o.type =='선택').length;
+        $scope.$parent.quests[i].collapsed = true;
+        
+        for(var j = 0; j < $scope.$parent.quests[i].compensations.length; j++){
+          var c = $scope.$parent.quests[i].compensations[j];
+          if(c.itemName.indexOf('경험치') > -1){
+            if(tmpResultExpCard[c.itemName] == undefined){
+              tmpResultExpCard[c.itemName] = parseInt(c.numOfItems);
+            }else{
+              tmpResultExpCard[c.itemName] = tmpResultExpCard[c.itemName] + parseInt(c.numOfItems); 
+            }
+          }
+        }
+      }
+      for(var name in tmpResultExpCard){
+        $scope.$parent.resultExpCard.push({'name': name, 'num': tmpResultExpCard[name]});
         
       }
       

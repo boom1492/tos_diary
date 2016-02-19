@@ -69,7 +69,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of Comments
 export function index(req, res) {
-  Comment.find().populate('author', 'name _id role').populate('mapId').limit(10).execAsync()
+  Comment.find().sort('-written').populate('author', 'name _id role').populate('mapId').limit(10).execAsync()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));

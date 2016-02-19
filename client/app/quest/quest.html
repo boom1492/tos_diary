@@ -1,20 +1,22 @@
 <div class="container">
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-12">
       <h3 class="page-header">{{quest.map.mapName}}(Lv. {{quest.map.level}})</h3>
+      <h6 ng-repeat="exp in resultExpCard"><img src="/assets/images/icon_item_expcard.png" width='24px' height='24px'>{{exp.name}} : {{exp.num}}장</h6>
+      
       <!--<div class="nav col-md-6 col-lg-4 col-sm-12 list-group" ng-repeat="quest in quest.quests">
         <a class="list-group-item">
           <strong>{{quest.questName}} </strong><span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}">{{(quest.type==1)?'메인':(quest.type==2)?'서브':'반복'}}</span><button class="btn btn-primary">Done</button>
         </a>
       </div>
       -->
-      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8' : fixedMap == 'false' && priority === 'map'}" style="text-align:center">
+      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8 col-md-12 col-sm-12' : fixedMap == 'false' && priority === 'map'}" style="text-align:center">
         <a href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'map'" target="_blank">
           <img style="width:100%; max-width:700px; margin-top:10px" src="{{quest.map.imgUrl}}"></img>
         </a>
       </div>
     
-      <div ng-show="quests.length == 0">퀘스트가 정보가 존재하지 않습니다.</div>
+      <div class="col-md-12 col-lg-4 col-sm-12" ng-show="quests.length == 0" style="margin-top:10px; text-align:center;">퀘스트가 정보가 존재하지 않습니다.</div>
       <!--<div class="list-group">
         <div class="list-group-item col-md-6 col-lg-4 col-sm-12" ng-repeat="quest in quests">
           <div><span style='width:30px; display:inline-block;'>{{quest.level}}</span>{{quest.questName}}<span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}">{{(quest.type==1)?'메인':(quest.type==2)?'서브':'반복'}}</span>
@@ -28,9 +30,9 @@
         </a>
       </div>
 -->      
-    <div style="padding: 0px; margin-bottom:10px; margin-top:10px;" class="col-md-12 col-lg-4 col-sm-12">
+      <div style="padding: 0px; margin-bottom:10px; margin-top:10px;" class="col-md-12 col-lg-4 col-sm-12">
         <div class="col-md-6 col-lg-12 col-sm-6"  ng-repeat="quest in quests | orderBy: (priority==='map')?'-done':'done'" style="padding: 0px;">
-          <div class="panel panel-default" style="margin:2px;" ng-class="{'completed': quest.done}">
+          <div class="panel panel-default" style="margin:2px;" ng-class="{'completed': quest.done}" >
             <div class="panel-heading">
               <h3 class="panel-title" style="overflow:hidden;">
                 <div style="display:inline;">
@@ -39,9 +41,11 @@
                   <span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}" style="padding:.2em .6em .2em !important">{{(quest.type==1)?'Main':(quest.type==2)?'Sub':'Repeat'}}</span>
                 </div>
                 <div style="float:right; font-size:1.2em">
-                  <a class="glyphicon glyphicon-paperclip" aria-hidden="true" ng-href="{{quest.detailsUrl}}" target="_blank" uib-tooltip="퀘스트 정보">
+                
+                  <a class="glyphicon glyphicon-paperclip" aria-hidden="true" ng-href="{{quest.detailsUrl}};" target="_blank" uib-tooltip="퀘스트 정보">
+                    
                   </a>
-                  <a class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="check(quest._id)" ng-class="{'notCompleted': !quest.done}" style="margin-left:5px;" uib-tooltip="완료">
+                  <a class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-left:5px;" uib-tooltip="완료" ng-click="check(quest._id);" ng-class="{'notCompleted': !quest.done}">
                   </a>
                 </div>
               </h3>
@@ -63,49 +67,47 @@
           </div>
         </div> 
       </div>
-    
-
-      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8' : fixedMap == 'false' && priority === 'quest'}" style="text-align:center">
+      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8 col-md-12 col-sm-12' : fixedMap == 'false' && priority === 'quest'}" style="text-align:center">
         <a href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'quest' || priority === undefined" target="_blank">
           <img style="width:100%; max-width:700px; margin-top:10px" src="{{quest.map.imgUrl}}" >
         </a>
       </div>
-    
+     
     </div>
 
-    <div class="col-lg-12" style="text-align:center; margin-top:30px">
+    <div class="col-lg-12 col-md-12 col-sm-12" style="text-align:center; margin-top:30px">
       <button class="btn btn-default" ng-click="toggleOrder()">퀘스트/지도 표시 순서 변경</button>
       <button class="btn btn-default" ng-click="toggleFixedMap()">지도 하단 고정</button>
-    </div>  
+    </div> 
 
-    <div class="col-lg-12" style="margin-bottom:10px;">
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom:10px;">
       <h3>유저 정보</h3>
       
       <form ng-submit="writeComment()" style="margin-bottom:10px">
         <p style="text-align:center" ng-show="getCurrentUser()._id == undefined">댓글을 작성하려면 로그인하셔야 합니다.</p>
-        <div class="input-group" ng-hide="getCurrentUser()._id == undefined">
-          <input type='text' class='form-control' ng-model="commentMessage">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">작성</button>
-          </span>
+        <div ng-hide="getCurrentUser()._id == undefined" style="margin-bottom:50px">
+          <textarea class='form-control' row='3' ng-model="commentMessage"></textarea>
+
+          <button class="btn btn-primary" type="submit" style="float:right; margin-top:5px">작성</button>
         </div>
       </form>
       <div class="list-group">
         <div href="#" class="list-group-item" ng-repeat="comment in comments | orderBy: '-written'">
           <h5 class="list-group-heading">
             <strong>{{comment.author.name}}</strong> 
-            <span class="label label-warning" ng-show="comment.author.role=='admin'">Admin</span>&nbsp;&nbsp;<span style="color:#7b7b7b">{{comment.written | date:'yyyy-MM-dd HH:mm:ss'}}</span></h5>
-          <h5 class="list-group-text">{{comment.message}}
+            <span class="label label-warning" ng-show="comment.author.role=='admin'">Admin</span>&nbsp;&nbsp;<span style="color:#7b7b7b">{{comment.written | date:'yyyy-MM-dd HH:mm:ss'}}</span>
             <a ng-click="removeComment(comment)" ng-show="comment.author._id == getCurrentUser()._id" style="float:right;">
-              <span class="glyphicon glyphicon-trash"></span>
+                <span class="glyphicon glyphicon-trash"></span>
             </a>
           </h5>
+          <span class="list-group-text" style="white-space:pre-line">{{comment.message}}</span>
         </div>
       </div>
     </div>
   
-    <div ng-show="fixedMap === 'true'" style="height:500px;">
+    <div ng-show="fixedMap === 'true'" style="height:500px;" class="col-lg-12 col-md-12 col-sm-12">
     </div>
+  
   </div>
 
 </div>
