@@ -1,0 +1,11 @@
+{
+    "jwolfe.file-tree-exclude.list": [
+        ".sass-cache",
+        ".tmp",
+        "node_modules",
+        "bower_components",
+        ".git",
+        "dist",
+        "vendor"
+    ]
+}
