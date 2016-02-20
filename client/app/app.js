@@ -11,11 +11,22 @@ angular.module('fullstackApp', [
   'ui.router',
   'ui.bootstrap',
   'validation.match',
-  'ngAside'
+  'ngAside',
+  'ui-notification'
 ])
-  .config(function($urlRouterProvider, $locationProvider) {
+  .config(function($urlRouterProvider, $locationProvider, NotificationProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
+  
+    NotificationProvider.setOptions({
+              delay: 5000,
+              startTop: 20,
+              startRight: 10,
+              verticalSpacing: 20,
+              horizontalSpacing: 20,
+              positionX: 'left',
+              positionY: 'bottom'
+          });
   });

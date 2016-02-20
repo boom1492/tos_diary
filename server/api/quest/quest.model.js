@@ -10,7 +10,8 @@ var QuestSchema = new mongoose.Schema({
   npcName: String,
   type: Number,
   detailsUrl: String,
-  compensations: []
+  compensations: [],
+  repeatCnt: Number
 });
 
 export default mongoose.model('Quest', QuestSchema);

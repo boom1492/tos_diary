@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-12">
+    <div class="col-md-12 col-lg-4 col-sm-12">
       <h3 class="page-header">{{quest.map.mapName}}(Lv. {{quest.map.level}})</h3>
       <h6 ng-repeat="exp in resultExpCard"><img src="/assets/images/icon_item_expcard.png" width='24px' height='24px'>{{exp.name}} : {{exp.num}}장</h6>
       
@@ -38,7 +38,7 @@
                 <div style="display:inline;">
                   <span style='width:30px; display:inline-block;'>{{quest.level}}</span>
                   <span>{{quest.questName}} </span>
-                  <span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}" style="padding:.2em .6em .2em !important">{{(quest.type==1)?'Main':(quest.type==2)?'Sub':'Repeat'}}</span>
+                  <span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}" style="padding:.2em .6em .2em !important">{{(quest.type==1)?'메인':(quest.type==2)?'서브':quest.repeatCnt + '회 반복'}}</span>
                 </div>
                 <div style="float:right; font-size:1.2em">
                 

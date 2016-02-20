@@ -4,7 +4,7 @@
 
 class QuestCtrl {
 
-  constructor($http, $scope, socket, $location, $cookies, Auth) {
+  constructor($http, $scope, socket, $location, $cookies, Auth, Notification) {
     this.$http = $http;
     //this.quests = [];
     this.map = {};
@@ -25,12 +25,16 @@ class QuestCtrl {
         $scope.$parent.quests[i].collapsed = true;
         
         for(var j = 0; j < $scope.$parent.quests[i].compensations.length; j++){
+          var repeatCnt = $scope.$parent.quests[i].repeatCnt;
+          if(repeatCnt == undefined){
+            repeatCnt = 1;
+          }
           var c = $scope.$parent.quests[i].compensations[j];
           if(c.itemName.indexOf('경험치') > -1){
             if(tmpResultExpCard[c.itemName] == undefined){
-              tmpResultExpCard[c.itemName] = parseInt(c.numOfItems);
+              tmpResultExpCard[c.itemName] = parseInt(c.numOfItems) * repeatCnt;
             }else{
-              tmpResultExpCard[c.itemName] = tmpResultExpCard[c.itemName] + parseInt(c.numOfItems); 
+              tmpResultExpCard[c.itemName] = tmpResultExpCard[c.itemName] + (parseInt(c.numOfItems) * repeatCnt); 
             }
           }
         }
@@ -93,6 +97,8 @@ class QuestCtrl {
       for(var i = 0; i< $scope.quests.length; i++){
         $scope.quests[i].done = $cookies.get('quest.' + $scope.quests[i]._id);
       }
+      
+      Notification.primary('Primary notification');
     }
     
     $scope.priority = $cookies.get("questPriority");
