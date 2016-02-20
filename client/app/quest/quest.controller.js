@@ -87,18 +87,22 @@ class QuestCtrl {
       this.map = response.data;
     });
     
-    $scope.check = function(questId){
-      if($cookies.get('quest.' + questId) != undefined){
-        $cookies.remove('quest.' + questId);
+    $scope.check = function(quest){
+      if($cookies.get('quest.' + quest._id) != undefined){
+        $cookies.remove('quest.' + quest._id);
+        
+      Notification.primary(quest.questName + ' 취소');
       }else{
-        $cookies.put('quest.' + questId, true); 
+        $cookies.put('quest.' + quest._id, true); 
+        
+      Notification.primary(quest.questName + ' 완료');
       }
       
       for(var i = 0; i< $scope.quests.length; i++){
         $scope.quests[i].done = $cookies.get('quest.' + $scope.quests[i]._id);
       }
       
-      Notification.primary('Primary notification');
+      console.log($scope.$parent.quests);
     }
     
     $scope.priority = $cookies.get("questPriority");

@@ -21,7 +21,7 @@ angular.module('fullstackApp', [
     $locationProvider.html5Mode(true);
   
     NotificationProvider.setOptions({
-              delay: 5000,
+              delay: 3000,
               startTop: 20,
               startRight: 10,
               verticalSpacing: 20,
