@@ -62,6 +62,10 @@ function handleError(res, statusCode) {
 
 // Gets a list of Quests
 export function index(req, res) {
+  if(req.query.mapId == undefined){
+    res.status(404).end();
+    return null;
+  }
   Quest.findAsync({mapId:req.query.mapId})
     .then(respondWithResult(res))
     .catch(handleError(res));
