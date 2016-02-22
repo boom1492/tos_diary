@@ -102,7 +102,6 @@ class QuestCtrl {
         $scope.quests[i].done = $cookies.get('quest.' + $scope.quests[i]._id);
       }
       
-      console.log($scope.$parent.quests);
     }
     
 
