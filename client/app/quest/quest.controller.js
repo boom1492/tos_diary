@@ -105,14 +105,25 @@ class QuestCtrl {
       console.log($scope.$parent.quests);
     }
     
-    $scope.priority = $cookies.get("questPriority");
 
+    if($cookies.get("questPriority") == undefined){
+      $cookies.put("questPriority", "quest");
+      $scope.priority = 'quest';
+    }
+    if($cookies.get("fixedMap") == undefined){
+      $cookies.put("fixedMap", "false");
+      $scope.fixedMap = 'false';
+    }
+    $scope.priority = $cookies.get("questPriority");
+    $scope.fixedMap = $cookies.get("fixedMap");
+    
     $scope.toggleOrder = function(){
       $scope.priority = $cookies.get("questPriority");
-      if($scope.priority === undefined){
+      /*if($scope.priority === undefined){
         $cookies.put('questPriority', 'map');
         $scope.priority = 'map';
-      }else if($scope.priority === 'map'){
+      }*/
+      if($scope.priority === 'map'){
         $cookies.put('questPriority', 'quest');
         $scope.priority = 'quest';
       }else{
@@ -121,7 +132,6 @@ class QuestCtrl {
       }
     }
     
-    $scope.fixedMap = $cookies.get("fixedMap");
     $scope.toggleFixedMap = function(){
       $scope.fixedMap = $cookies.get("fixedMap");
       
