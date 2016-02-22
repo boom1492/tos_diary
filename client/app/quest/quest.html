@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
       <h3 class="page-header">{{quest.map.mapName}}(Lv. {{quest.map.level}})</h3>
-      <h6 ng-repeat="exp in resultExpCard"><img src="/assets/images/icon_item_expcard.png" width='24px' height='24px'>{{exp.name}} : {{exp.num}}장</h6>
+      <h4 ng-repeat="exp in resultExpCard"><img src="/assets/images/icon_item_expcard.png" width='24px' height='24px'>{{exp.name}} : {{exp.num}}장</h6>
       
       <!--<div class="nav col-md-6 col-lg-4 col-sm-12 list-group" ng-repeat="quest in quest.quests">
         <a class="list-group-item">
@@ -10,9 +10,9 @@
         </a>
       </div>
       -->
-      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8 col-md-12 col-sm-12' : fixedMap == 'false' && priority === 'map'}" style="text-align:center">
+      <div class="row" ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8 col-md-12 col-sm-12' : fixedMap == 'false' && priority === 'map'}" style="text-align:center">
         <a href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'map'" target="_blank">
-          <img style="width:100%; max-width:700px; margin-top:10px" src="{{quest.map.imgUrl}}"></img>
+          <img style="width:100%; max-width:800px; margin-top:10px" src="{{quest.map.imgUrl}}"></img>
         </a>
       </div>
     
@@ -30,6 +30,7 @@
         </a>
       </div>
 -->      
+    <!--
       <div style="padding: 0px; margin-bottom:10px; margin-top:10px;" class="col-md-12 col-lg-4 col-sm-12">
         <div class="col-md-6 col-lg-12 col-sm-6 col-height"  ng-repeat="quest in quests | orderBy: (priority==='map')?'-done':'done'" style="padding: 0px;">
           <div class="panel panel-default" style="margin:2px;" ng-class="{'completed': quest.done}" >
@@ -61,15 +62,84 @@
                   <img ng-src="{{compensation.itemImgUrl}}" width='24px' height='24px' uib-tooltip='{{compensation.itemName}} x{{compensation.numOfItems}}'>
                 </span>
 
-              <!--<span class="btn" ng-class="{'btn-danger': quest.done, 'btn-primary': quest.done == false || quest.done == undefined}" style="float:right;" ng-click="check(quest._id)">{{quest.done?'Undo':'Done'}}</span>  -->
               </div>
             </div>
           </div>
         </div> 
       </div>
-      <div ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8 col-md-12 col-sm-12' : fixedMap == 'false' && priority === 'quest'}" style="text-align:center">
+    
+      <div>Test</div>-->
+      <div style="padding: 0px; margin-bottom:10px; margin-top:10px;" class="col-md-12 col-lg-4 col-sm-12">
+        <div class="col-md-6 col-lg-12 col-sm-6 col-height"  ng-repeat="quest in quests | orderBy: (priority==='map')?'-done':'done'" style="padding: 1px;">
+          <div class="panel panel-default" style="margin:0px;" ng-class="{'completed': quest.done}" >
+            <div class="panel-heading">
+              <div class="panel-title" style="overflow:hidden;">
+                <div style="font-size:0.8em">
+                  
+                  <span style='display:inline-block; width:20px; '><strong>{{quest.level}}</strong></span>
+                  <span id="{{quest._id}}">{{quest.npcName}}</span>
+
+                  
+                </div>
+                <div style="float:right; font-size:1.2em; display:inline;">
+                <!--
+                  <a class="glyphicon glyphicon-paperclip" aria-hidden="true" ng-href="{{quest.detailsUrl}};" target="_blank" uib-tooltip="퀘스트 정보">
+                    
+                  </a>
+                  -->
+                  <a class="glyphicon glyphicon-plus" aria-hidden="true" ng-show="quest.collapsed" ng-click="quest.collapsed = false;">
+                  </a>
+                  <a class="glyphicon glyphicon-minus" aria-hidden="true" ng-show="!quest.collapsed" ng-click="quest.collapsed = true;">
+                  </a>
+                  <a class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-left:5px;" uib-tooltip="완료" ng-click="check(quest); quest.collapsed=true;" ng-class="{'notCompleted': !quest.done}">
+                  </a>
+                </div>
+                <div>{{quest.questName}} 
+                  <span class="label" ng-class="{'label-primary' : quest.type==1, 'label-warning' : quest.type==2, 'label-success':quest.type==3}">{{(quest.type==1)?'메인':(quest.type==2)?'서브':quest.repeatCnt + '회 반복'}}
+                  </span>
+                </div>
+                
+              </div>
+            </div>
+            <div class="panel-body" uib-collapse="quest.collapsed">
+              <!--<div>NPC: {{quest.npcName}}</div>-->
+              <div>보상 : <span ng-show="quest.compensations.length ==0">없음</span>
+                <span ng-repeat="compensation in quest.compensations" ng-show="compensation.type=='기본'"}}>
+                  <img ng-src="{{compensation.itemImgUrl}}" width='24px' height='24px' uib-tooltip='{{compensation.itemName}} x{{compensation.numOfItems}}'>
+                </span>
+                <span ng-show="quest.selectionCnt!=0">|</span>
+                <span ng-repeat="compensation in quest.compensations" ng-show="compensation.type=='선택'"}}>
+                  <img ng-src="{{compensation.itemImgUrl}}" width='24px' height='24px' uib-tooltip='{{compensation.itemName}} x{{compensation.numOfItems}}'>
+                </span>
+              <!--<span class="btn" ng-class="{'btn-danger': quest.done, 'btn-primary': quest.done == false || quest.done == undefined}" style="float:right;" ng-click="check(quest._id)">{{quest.done?'Undo':'Done'}}</span>  -->
+              </div>
+              <hr/>
+              <div>
+                목표 : <p ng-bind-html="quest.object"></p>
+              </div>
+              <hr/>
+              <div>
+                <p ng-bind-html="quest.description"></p>
+              </div>
+              <hr ng-hide="quest.preQuests == undefined || quest.preQuests.length == 0"/>
+              <div ng-hide="quest.preQuests == undefined || quest.preQuests.length == 0">
+                <p>선행 퀘스트 : </p>
+                <div ng-repeat="preQuest in quest.preQuests" ><a href="#{{preQuest._id}}">[{{preQuest.level}}] {{preQuest.questName}}</a></div>
+              </div>
+              <hr ng-hide="quest.connectedQuests == undefined || quest.connectedQuests.length == 0"/>
+              <div ng-hide="quest.connectedQuests == undefined || quest.connectedQuests.length == 0">
+                <p>연계 퀘스트 : </p>
+                <div ng-repeat="connectedQuest in quest.connectedQuests"><a href="#{{connectedQuest._id}}">[{{connectedQuest.level}}] {{connectedQuest.questName}}</a></div>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    
+    
+      <div class="row" ng-class="{'navbar-fixed-bottom' : fixedMap == 'true', 'col-lg-8 col-md-12 col-sm-12' : fixedMap == 'false' && priority === 'quest'}" style="text-align:center">
         <a href="{{quest.map.imgUrl}}" style="padding:0px;" ng-show="priority === 'quest' || priority === undefined" target="_blank">
-          <img style="width:100%; max-width:700px; margin-top:10px" src="{{quest.map.imgUrl}}" >
+          <img style="width:100%; max-width:800px; margin-top:10px" src="{{quest.map.imgUrl}}" >
         </a>
       </div>
      

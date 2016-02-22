@@ -11,7 +11,11 @@ var QuestSchema = new mongoose.Schema({
   type: Number,
   detailsUrl: String,
   compensations: [],
-  repeatCnt: Number
+  repeatCnt: Number,
+  description: String,
+  Object: String,
+  connectedQuests: [{type: ObjectId, ref: 'Quest'}],
+  preQuests: [{type: ObjectId, ref: 'Quest'}]
 });
 
 export default mongoose.model('Quest', QuestSchema);

@@ -91,7 +91,7 @@ class QuestCtrl {
       if($cookies.get('quest.' + quest._id) != undefined){
         $cookies.remove('quest.' + quest._id);
         
-      Notification.primary(quest.questName + ' 취소');
+      Notification.warning(quest.questName + ' 취소');
       }else{
         $cookies.put('quest.' + quest._id, true); 
         

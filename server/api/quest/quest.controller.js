@@ -66,7 +66,8 @@ export function index(req, res) {
     res.status(404).end();
     return null;
   }
-  Quest.findAsync({mapId:req.query.mapId})
+  
+  Quest.find({mapId:req.query.mapId}).populate('connectedQuests', 'questName npcName type _id level').populate('preQuests', 'questName npcName type _id level').execAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
