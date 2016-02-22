@@ -38,3 +38,8 @@ body { padding-top: 70px; }
 .notCompleted {
   color: #7e7e7e !important;
 }
+
+
+.adsense { width: 320px; height: 100px; }
+@media(min-width: 500px) { .adsense { width: 468px; height: 60px; } }
+@media(min-width: 800px) { .adsense { width: 728px; height: 90px; } }
