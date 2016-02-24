@@ -27,6 +27,8 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
       })
         .then(res => {
           $cookies.put('token', res.data.token);
+          console.log(res.data.token);
+          console.log($cookies.get('token'));
           currentUser = User.get();
           return currentUser.$promise;
         })

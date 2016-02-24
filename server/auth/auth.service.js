@@ -17,9 +17,16 @@ var validateJwt = expressJwt({
  */
 export function isAuthenticated() {
   return compose()
+    // for internet explorer..
+    .use(function(req, res, next){
+      if(req.cookies && req.cookies.hasOwnProperty('token')) {
+        // Copy the token without the quotes
+        req.headers.authorization = 'Bearer ' + req.cookies.token;
+      }
+      next();
+    })
     // Validate jwt
     .use(function(req, res, next) {
-    console.log(req.headers);
       // allow access_token to be passed through query parameter as well
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
@@ -28,7 +35,6 @@ export function isAuthenticated() {
     })
     // Attach user to request
     .use(function(req, res, next) {
-    console.log(req.headers);
       User.findByIdAsync(req.user._id)
         .then(user => {
           if (!user) {
