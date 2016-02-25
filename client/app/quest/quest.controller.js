@@ -144,7 +144,6 @@ class QuestCtrl {
         $scope.fixedMap = 'false';
       }
     }
-    
   }
 
 }
