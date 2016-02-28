@@ -5,6 +5,10 @@ class NavbarController {
   menu = [{
     'title': 'Home',
     'state': 'main'
+  },
+  {
+    'title': '경험치 계산기',
+    'state': 'exp'
   }];
 
   isCollapsed = true;

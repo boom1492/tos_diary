@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="page-header">
+    <h1>경험치 계산기</h1>
+    <p>경험치 계산기 서비스입니다. 계산된 결과는 정확하지 않을 수 있으니 참고용으로만 사용해주세요.</p>
+  
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Base</div>
+    <div class="panel-body">
+      <div class="col-xs-12 col-sm-6 col-lg-6 no-padding">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">레벨</span>
+          <input type="number" class="form-control" placeholder="레벨을 입력하세요" aria-describedby="basic-addon1" pattern="[0-9]+" ng-model="baseLevel">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-lg-6 no-padding">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">경험치</span>
+          <input type="number" class="form-control" placeholder="경험치를 입력하세요" aria-describedby="basic-addon1" pattern="[0-9.]+" ng-model="baseExp">
+          <span class="input-group-addon" id="basic-addon1">%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Class</div>
+    <div class="panel-body">
+      <div class="col-xs-12 col-sm-4 col-lg-4 no-padding">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">랭크</span>
+          <input type="number" class="form-control" placeholder="랭크를 입력하세요" aria-describedby="basic-addon1" pattern="[0-9]+" ng-model="classRank">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-lg-4 no-padding">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">레벨</span>
+          <input type="number" class="form-control" placeholder="레벨을 입력하세요" aria-describedby="basic-addon1" pattern="[0-9]+" ng-model="classLevel">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-lg-4 no-padding">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">경험치</span>
+          <input type="number" class="form-control" placeholder="경험치를 입력하세요" aria-describedby="basic-addon1" pattern="[0-9.]+" ng-model="classExp">
+          <span class="input-group-addon" id="basic-addon1">%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">경험치 카드</div>
+    <div class="panel-body">
+      <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 no-padding" ng-repeat="card in expCards">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Lv{{card.level}}</span>
+            <input type="number" class="form-control" pattern="[0-9]+" ng-model="card.count">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div style="margin-bottom:10px; text-align:center;">
+    <button class="btn btn-primary" style="width:50%;" ng-click="calc()">계산하기</button>
+  </div>
+  
+  <!-- Tos Diary -->
+  <div style="text-align:center; margin-top:10px;">
+    <ins class="adsbygoogle adsense"
+       style="display:inline-block;"
+       data-ad-client="ca-pub-2881285595917115"
+       data-ad-slot="8150858983"
+       data-ad-format="auto"></ins>
+
+  </div>
+  
+  <div class="panel panel-primary" ng-show="result">
+    <div class="panel-heading">결과</div>
+    <div class="panel-body">
+      <div class="col-xs-12 no-padding">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Base</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" readonly value="Lv. {{result.baseLevel}}">
+        </div>
+      </div>
+      <div class="col-xs-12 no-padding" style="margin-top:2px;">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{result.baseExp}}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{result.baseExp}}%;">
+            {{result.baseExp | number : 1}}%
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 no-padding">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Class</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" readonly value="Rank {{result.classRank}} Lv. {{result.classLevel}}">
+        </div>
+      </div>
+      <div class="col-xs-12 no-padding" style="margin-top:2px;">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{result.classExp}}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{result.classExp}}%;">
+            {{result.classExp | number : 1}}%
+          </div>
+        </div>
+      </div>
+      
+      <p>만약, 다른 시뮬레이터나 실제 결과와 다른 결과가 나온 경우 홈페이지 하단의 개발자 이메일로 제보해주시면 감사하겠습니다.</p>
+    </div>
+  </div>
+  
+  
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+</div>
