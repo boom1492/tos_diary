@@ -25,7 +25,6 @@ angular.module('fullstackApp')
       
       $http.get('/api/exps/?baseLevel=' + $scope.baseLevel + '&baseExp=' + $scope.baseExp + '&classRank=' + $scope.classRank + '&classLevel=' + $scope.classLevel + '&classExp=' + $scope.classExp + '&cards=' + cards).then(response => {
         $scope.result = response.data;
-        console.log($scope.result);
       },
       err=>{
         Notification.error('잘못된 데이터를 전송하였습니다.');

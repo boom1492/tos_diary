@@ -67,7 +67,7 @@ export function index(req, res) {
     return null;
   }
   
-  Quest.find({mapId:req.query.mapId}).populate('connectedQuests', 'questName npcName type _id level').populate('preQuests', 'questName npcName type _id level').execAsync()
+  Quest.find({mapId:req.query.mapId}).sort('questName').populate('connectedQuests', 'questName npcName type _id level').populate('preQuests', 'questName npcName type _id level').execAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

@@ -3,7 +3,7 @@
 class NavbarController {
   //start-non-standard
   menu = [{
-    'title': 'Home',
+    'title': '홈',
     'state': 'main'
   },
   {
@@ -40,12 +40,12 @@ class NavbarController {
         backdrop: backdrop,
         controller: 'SidebarCtrl'
       });
+      
       $scope.$parent.asideInstance.result.then(postClose, postClose);
   
     }
     
     $scope.clickItem = function(mapId){
-      console.log(mapId);
       if($scope.asideInstance !== undefined){
         $scope.asideInstance.close();  
       }
