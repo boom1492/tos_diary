@@ -1,4 +1,4 @@
-<div class="container">
+<!--<div class="container">
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Maps:</h1>
@@ -8,4 +8,30 @@
     </div>
   </div>
 
+</div>-->
+<div class="worldmap container-fluid">
+  <div class="map_block" ng-style="{'margin-top': map.location.x + 'px', 'margin-left': map.location.y + 'px'}" ng-repeat="map in block_maps">
+    <a ng-href="/quest?mapId={{map._id}}">
+      <div class="map_name">{{map.mapName}}</div>
+      <span style='float:left;'></span>
+      
+      <div class="map_name"><img src="/assets/images/bakarine.png" style="width:16px; height:16px;" ng-show="map.warp">&nbsp;Lv.{{map.level}}</div>
+    </a>
+  </div>
+  <div class="map_group" ng-style="{'margin-top': group.location.x + 'px', 'margin-left': group.location.y + 'px'}" ng-repeat="group in group_names">
+    <a ng-click="group.isOpen = !group.isOpen">
+      <div class="map_name">{{group.group}}</div>
+    </a>
+    <div ng-show="group.isOpen" class="group_content">
+      <div ng-repeat="map in group_maps | filter : {group: group.group} | orderBy: 'level'">
+        <a ng-href="/quest?mapId={{map._id}}" style="color:#ddd">
+          <span style="width:18px; display:inline-block;">
+            <img src="/assets/images/bakarine.png" style="width:16px; height:16px;" ng-show="map.warp">
+          </span>
+          <span style="width:40px; display:inline-block">Lv.{{map.level}}</span>
+          {{map.mapName}}
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

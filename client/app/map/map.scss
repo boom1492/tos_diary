@@ -1,0 +1,42 @@
+.worldmap{
+  font-size: 12px;
+  color: #ffffff;
+  line-height: 16px;
+  background: url('/assets/images/worldmap.jpg') 0 0 no-repeat;
+  width: 1900px;
+  height: 3959px;
+  margin-top: -1000px;
+}
+
+.map_block{
+  background: rgba(0,0,0,0.5);
+  padding:3px;
+  border-radius: 4px;
+  position: absolute;
+  z-index:1000;
+}
+
+.map_group{
+  background: rgba(255,0,0,0.5);
+  padding:3px;
+  border-radius: 4px;
+  position: absolute;
+  z-index:1000;
+}
+
+.worldmap a{
+  color: #fff;
+  text-align: center;
+  word-break: break-all;   
+  vertical-align: middle;
+}
+
+.group_content{
+  background: rgba(0,0,0,0.5);
+  border-radius: 4px;
+  padding:3px;
+}
+
+
+@media(min-width: 320px) { .worldmap { position:absolute; } }
+@media(min-width: 1899px) { .worldmap { position:relative; } }

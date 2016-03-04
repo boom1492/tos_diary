@@ -2,13 +2,14 @@
   
   <input type="text" class="form-control" placeholder="지도 이름을 입력하세요.." ng-model="text">
   
-  <div class="col-12" role="group" style="margin-top:5px;">
+  <div role="group" style="margin-top:5px;">
     <button type="button" class="btn" ng-click="order('mapName')" ng-class="{'btn-primary': predicate == 'mapName'}">가나다순</button>
     <button type="button" class="btn" ng-click="order('level')" ng-class="{'btn-primary': predicate == 'level'}">레벨순</button>
     <button type="button" class="btn btn-default" ng-click="reset()" style="float:right;"><span class="glyphicon glyphicon-remove"></span></button>
   </div>
-  
+  <a class="btn btn-info" style="margin-top:5px; width:100%;" ng-href="/map" ng-click="clickItem();"><span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;전체지도</a>
 </div>
+
 <div class="modal-body">
   <div class='list-group'>
     <a class='list-group-item' class="sortorder" ng-repeat="map in maps | filter:text" ng-href="/quest?mapId={{map._id}}" ng-click="clickItem(map._id);saveQuery();" target='_self'><span style='width:40px; display:inline-block;'>{{map.level}}</span><span class="col-10">{{map.mapName}}</span></a>
