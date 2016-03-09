@@ -1,32 +1,45 @@
 <header class="hero-unit" id="banner">
   <div class="container">
     <h1>TOS Diary</h1>
-    <p class="lead">트리오브세이비어 퀘스트 일지 베타 서비스입니다. <br/>왼쪽 상단의 <button class="btn btn-primary" ng-click="openAside('left', true)"><span class="
+    <p >트리오브세이비어 퀘스트 일지 베타 서비스입니다. <br/>왼쪽 상단의 <button class="btn btn-primary" ng-click="openAside('left', true)"><span class="
 glyphicon glyphicon-search"></span> 지도 검색</button> 버튼을 눌러보세요.</p>
-    
     <p>경험치카드 시뮬레이터 서비스가 오픈되었습니다.<br/>상단의 <a class="btn btn-default" href="/exp">경험치 계산기</a> 버튼을 이용해 보세요.</p>
   </div>
 </header>
 
 <div class="container" style="margin-top:10px;">
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <h3 class="panel-title">최근 댓글</h3>
-        </div>
-        <div class="panel-body list-group">
-          <a href="/quest?mapId={{comment.mapId._id}}" class="list-group-item" ng-repeat="comment in comments | orderBy: '-written'">
-            <h5 class="list-group-heading">
-              <span>[{{comment.mapId.mapName}}]</span>
-              <strong>{{comment.author.name}}</strong> 
-              <span class="label label-warning" ng-show="comment.author.role=='admin'">Admin</span>&nbsp;&nbsp;<span style="color:#7b7b7b">{{comment.written | date:'yyyy-MM-dd HH:mm:ss'}}</span></h5>
-            <h5 class="list-group-text">{{comment.message}}</h5>
-          </a>
-        </div>
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">공지사항</h3>
+      </div> 
+      <div class="list-group">
+        <a href="/article?id={{article._id}}" class="list-group-item" ng-repeat="article in articles | orderBy: '-written'">
+          <h5 class="list-group-heading">
+            <strong>{{article.title}}</strong> 
+          </h5>
+          <div style="color:#7b7b7b; text-align:right;">{{article.written | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        </a>
       </div>
     </div>
   </div>
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">최근 댓글</h3>
+      </div>
+      <div class="list-group">
+        <a href="/quest?mapId={{comment.mapId._id}}" class="list-group-item" ng-repeat="comment in comments | orderBy: '-written'">
+          <h5 class="list-group-heading">
+            <span>[{{comment.mapId.mapName}}]</span>
+            <strong>{{comment.author.name}}</strong> 
+            <span class="label label-warning" ng-show="comment.author.role=='admin'">Admin</span>&nbsp;&nbsp;<span style="color:#7b7b7b">{{comment.written | date:'yyyy-MM-dd HH:mm:ss'}}</span></h5>
+          <h5 class="list-group-text">{{comment.message}}</h5>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!--
   <div class="row">
     <div class="col-lg-12">

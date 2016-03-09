@@ -10,10 +10,14 @@ angular.module('fullstackApp')
     $scope.classRank = 1;
     $scope.classLevel = 1;
     $scope.classExp = 0;
-  
+  /*
     for(var i = 1; i <= 12; i++){
       $scope.expCards.push({level: i, count: 0});
     }
+  */
+    $http.get('/api/exps/cards').then(response =>{
+      $scope.expCards = response.data;
+    });
   
     $scope.calc = function(){
       //http://localhost:9000/api/exps?baseLevel=203&baseExp=4.7&classRank=6&classLevel=10&classExp=49.5&cards=0,0,0,0,0,0,0,110,90,0,0,0

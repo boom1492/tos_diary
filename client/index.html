@@ -23,6 +23,7 @@
       <!-- injector:css -->
       <!-- endinjector -->
     <!-- endbuild -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
   </head>
   <body ng-app="fullstackApp">
     <!--[if lt IE 7]>
@@ -72,21 +73,27 @@
       <script src="bower_components/angular-aside/dist/js/angular-aside.js"></script>
       <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.js"></script>
       <!-- endbower -->
-    
+      <script src="bower_components/marked/marked.min.js"></script>
+      <script src="bower_components/angular-marked/dist/angular-marked.js"></script>
       <script src="bower_components/angular-aside/dist/js/angular-aside.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+    
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
     <!-- build:js(.tmp) app/app.js -->
       <script src="app/app.js"></script>
       <!-- injector:js -->
-      <script src="components/auth/auth.module.js"></script>
       <script src="app/admin/admin.module.js"></script>
+      <script src="components/auth/auth.module.js"></script>
       <script src="components/util/util.module.js"></script>
-      <script src="app/account/signup/signup.controller.js"></script>
+      <script src="app/write-article/write-article.controller.js"></script>
       <script src="app/admin/admin.controller.js"></script>
       <script src="app/account/account.js"></script>
       <script src="app/admin/admin.router.js"></script>
       <script src="app/app.constant.js"></script>
+      <script src="app/article/article.controller.js"></script>
+      <script src="app/article/article.js"></script>
       <script src="app/exp/exp.controller.js"></script>
       <script src="app/exp/exp.js"></script>
       <script src="app/main/main.controller.js"></script>
@@ -96,6 +103,8 @@
       <script src="app/quest/quest.controller.js"></script>
       <script src="app/quest/quest.js"></script>
       <script src="app/account/login/login.controller.js"></script>
+      <script src="app/write-article/write-article.js"></script>
+      <script src="app/account/settings/settings.controller.js"></script>
       <script src="components/auth/auth.service.js"></script>
       <script src="components/auth/interceptor.service.js"></script>
       <script src="components/auth/router.decorator.js"></script>
@@ -110,7 +119,7 @@
       <script src="components/sidebar/sidebar.controller.js"></script>
       <script src="components/sidebar/sidebar.js"></script>
       <script src="components/socket/socket.service.js"></script>
-      <script src="app/account/settings/settings.controller.js"></script>
+      <script src="app/account/signup/signup.controller.js"></script>
       <script src="components/util/util.service.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->

@@ -53,6 +53,14 @@ function handleError(res, statusCode) {
   };
 }
 
+export function cards(req, res){
+  ExpCard.find().sort('level').exec((err, result)=>{
+    if(err){
+      res.status(500).end();
+    }
+    res.json(result);
+  });
+}
 // Gets a list of Exps
 export function index(req, res) {
   try{
@@ -104,7 +112,12 @@ export function index(req, res) {
           for(var idx in result[5]){
             beforeClassExp = beforeClassExp + result[5][idx].totalRequired;
           }
-          var currentClassExp = result[2][0].totalRequired + (result[3][0].required * 0.01 * classExp) + beforeClassExp;
+          var currentClassExp = 0;
+          if(result[3].length === 0){
+            currentClassExp = result[2][0].totalRequired + beforeClassExp;  
+          }else{
+            currentClassExp = result[2][0].totalRequired + (result[3][0].required * 0.01 * classExp) + beforeClassExp;
+          }
 
           for(var idx in cards){
             if(cards[idx] != 0){
@@ -146,11 +159,18 @@ export function index(req, res) {
               var curClass = result2[2][0];
               var nextClass = result2[3][0];
 
-              var remainClass = currentClassExp - tempTotal - curClass.totalRequired;
-              var curClassPercent = remainClass / nextClass.required * 100;
-              res.json({'baseLevel': curBase.level, 'baseExp': curBasePercent || 0, 'classRank': curClass.rank, 'classLevel': curClass.level, 'classExp': curClassPercent || 0});
+              var curClassPercent = 0;
+              if(curClass === undefined){
+                res.json({'baseLevel': curBase.level, 'baseExp': curBasePercent || 0, 'classRank': 7, 'classLevel': 15, 'classExp': 100});
+              }else{
+                var remainClass = currentClassExp - tempTotal - curClass.totalRequired;
+                var curClassPercent = remainClass / nextClass.required * 100;
+                
+                res.json({'baseLevel': curBase.level, 'baseExp': curBasePercent || 0, 'classRank': curClass.rank, 'classLevel': curClass.level, 'classExp': curClassPercent || 0});
+              }
             }catch(e){
               res.status(500).end();
+              console.log(e);
             }
           }); 
         }catch(e){

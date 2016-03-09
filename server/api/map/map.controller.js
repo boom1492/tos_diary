@@ -61,12 +61,12 @@ function handleError(res, statusCode) {
 
 // Gets a list of Maps
 export function index(req, res) {
+
   Map.findAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));  
-
 }
-
+  
 // Gets a single Map from the DB
 export function show(req, res) {
   Map.findByIdAsync(req.params.id)

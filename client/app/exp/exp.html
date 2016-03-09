@@ -53,7 +53,7 @@
     <div class="panel-body">
       <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 no-padding" ng-repeat="card in expCards">
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Lv{{card.level}}</span>
+          <span class="input-group-addon" id="basic-addon1" uib-tooltip="Base {{card.baseExp | number}} Class {{card.classExp | number}}">Lv{{card.level}}</span>
             <input type="number" class="form-control" pattern="[0-9]+" ng-model="card.count">
         </div>
       </div>

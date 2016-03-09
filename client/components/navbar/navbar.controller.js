@@ -9,6 +9,10 @@ class NavbarController {
   {
     'title': '경험치 계산기',
     'state': 'exp'
+  },
+  {
+    'title': '공지사항',
+    'state': 'article'
   }];
 
   isCollapsed = true;

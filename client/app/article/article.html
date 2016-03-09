@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="col-xs-12" ng-show="articles.length == 0">
+    공지사항이 없습니다.
+  </div>
+  <div ng-repeat="article in articles" class="col-xs-12 well">
+    <h2 class="page-header">{{article.title}}</h2>
+    <div>
+    </div>
+    <div marked="article.contents"></div>
+    <hr style="clear:both;">
+    <span style="float:right; text-align:right;">작성자 : {{article.author.name}}</br>{{article.written | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+
+
+  </div>
+</div>

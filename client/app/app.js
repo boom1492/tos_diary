@@ -12,9 +12,10 @@ angular.module('fullstackApp', [
   'ui.bootstrap',
   'validation.match',
   'ngAside',
-  'ui-notification'
+  'ui-notification',
+  'hc.marked'
 ])
-  .config(function($urlRouterProvider, $locationProvider, NotificationProvider) {
+  .config(function($urlRouterProvider, $locationProvider, NotificationProvider, markedProvider) {
     $urlRouterProvider
       .otherwise('/');
 
@@ -29,4 +30,15 @@ angular.module('fullstackApp', [
               positionX: 'left',
               positionY: 'bottom'
           });
+    markedProvider.setOptions({
+      gfm: true,
+      tables: true,
+      highlight: function (code, lang) {
+        if (lang) {
+          return hljs.highlight(lang, code, true).value;
+        } else {
+          return hljs.highlightAuto(code).value;
+        }
+      }
+    });
   });

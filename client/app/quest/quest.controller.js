@@ -20,9 +20,12 @@ class QuestCtrl {
       $scope.$parent.quests = response.data;
       
       for(var i = 0; i < $scope.$parent.quests.length; i++){
-        $scope.$parent.quests[i].done = $cookies.get('quest.' + $scope.$parent.quests[i]._id);
         $scope.$parent.quests[i].selectionCnt = $scope.$parent.quests[i].compensations.filter(o=>o.type =='선택').length;
         $scope.$parent.quests[i].collapsed = true;
+        
+        if($scope.getCurrentUser()._id == undefined){
+          $scope.$parent.quests[i].done = $cookies.get('quest.' + $scope.$parent.quests[i]._id);
+        }
         
         for(var j = 0; j < $scope.$parent.quests[i].compensations.length; j++){
           var repeatCnt = $scope.$parent.quests[i].repeatCnt;
@@ -38,6 +41,7 @@ class QuestCtrl {
             }
           }
         }
+        
       }
       for(var name in tmpResultExpCard){
         $scope.$parent.resultExpCard.push({'name': name, 'num': tmpResultExpCard[name]});
@@ -87,21 +91,82 @@ class QuestCtrl {
       this.map = response.data;
     });
     
+    if($scope.getCurrentUser()._id != undefined){
+      $http.get('/api/quests/' + $scope.mapId + '?timestamp=' + new Date().getTime()).then(response=>{
+        var questIds = _.map(response.data, function(item){
+          return item.questId
+        });
+        for(var idx in $scope.$parent.quests){
+          if(_.contains(questIds, $scope.$parent.quests[idx]._id)){
+            $scope.$parent.quests[idx].done = true;
+          }
+        }
+      });
+    }
+    
     $scope.check = function(quest){
-      if($cookies.get('quest.' + quest._id) != undefined){
-        $cookies.remove('quest.' + quest._id);
-        
-      Notification.warning(quest.questName + ' 취소');
+      if($scope.getCurrentUser()._id != undefined){
+        if(quest.done){
+          $http.delete('/api/quests/' + quest._id).then(response =>{
+            quest.done = false;
+            Notification.warning(quest.questName + ' 취소');
+          });
+        }else{
+          $http.put('/api/quests/' + quest._id).then(response =>{
+            quest.done = true;
+            Notification.primary(quest.questName + ' 완료');
+          });
+        }
       }else{
-        $cookies.put('quest.' + quest._id, true); 
-        
-      Notification.primary(quest.questName + ' 완료');
+        if($cookies.get('quest.' + quest._id) != undefined){
+          $cookies.remove('quest.' + quest._id);
+
+        Notification.warning(quest.questName + ' 취소');
+        }else{
+          $cookies.put('quest.' + quest._id, true); 
+
+        Notification.primary(quest.questName + ' 완료');
+        }
+
+        for(var i = 0; i< $scope.quests.length; i++){
+          $scope.quests[i].done = $cookies.get('quest.' + $scope.quests[i]._id);
+        }
+
       }
-      
-      for(var i = 0; i< $scope.quests.length; i++){
-        $scope.quests[i].done = $cookies.get('quest.' + $scope.quests[i]._id);
+    }
+    
+    $scope.doneAll = function(){
+      if($scope.getCurrentUser()._id != undefined){
+        for(var idx in $scope.$parent.quests){
+          $http.put('/api/quests/' + $scope.$parent.quests[idx]._id).then(response =>{
+
+          });
+          $scope.$parent.quests[idx].done = true;
+        }
+      } else{
+        for(var idx in $scope.$parent.quests){
+          $cookies.put('quest.' + $scope.$parent.quests[idx]._id, true); 
+          $scope.$parent.quests[idx].done = true;
+        }
       }
-      
+    }
+    
+    $scope.cancelAll = function(){  
+      if($scope.getCurrentUser()._id != undefined){
+        for(var idx in $scope.$parent.quests){
+          $http.delete('/api/quests/' + $scope.$parent.quests[idx]._id).then(response =>{
+          
+          });
+          $scope.$parent.quests[idx].done = false;
+        }
+      } else{
+        for(var idx in $scope.$parent.quests){
+          if($cookies.get('quest.' + $scope.$parent.quests[idx]._id) != undefined){
+            $cookies.remove('quest.' + $scope.$parent.quests[idx]._id);
+          }
+          $scope.$parent.quests[idx].done = false;
+        }
+      }
     }
     
 
@@ -134,7 +199,6 @@ class QuestCtrl {
     $scope.toggleFixedMap = function(){
       $scope.fixedMap = $cookies.get("fixedMap");
       
-      //console.log("before:"+$scope.fixedMap);
       if($scope.fixedMap === undefined || $scope.fixedMap === 'false'){
         $cookies.put('fixedMap', 'true');
         $scope.fixedMap = 'true';

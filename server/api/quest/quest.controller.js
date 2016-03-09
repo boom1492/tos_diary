@@ -11,6 +11,8 @@
 
 import _ from 'lodash';
 import Quest from './quest.model';
+import QuestCompletion from './quest-completion.model';
+import User from './../user/user.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -105,4 +107,85 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function getCompletions(req, res){
+  var userId = req.user._id;
+  if(userId === undefined){
+    res.status(401).end();
+  }
+  var mapId = req.params.id;
+  if(mapId === undefined){
+    QuestCompletion.findAsync({userId: userId}).then(result=>{
+      res.status(200).json(result);
+    })
+    .catch(handleError(res));  
+  }else{
+    QuestCompletion.findAsync({mapId:mapId, userId: userId}).then(result=>{
+      res.status(200).json(result);
+    })
+    .catch(handleError(res));
+  }
+  
+}
+  
+export function complete(req, res){
+  var userId = req.user._id;
+  var questId = req.params.id;
+  if(questId === undefined){
+    return res.status(404).end();
+  }
+  
+  User.findOneAsync({ _id: userId }, '-salt -password')
+    .then(user => { // don't ever give out the password or salt
+      
+      if (!user) {
+        return res.status(401).end();
+      }
+
+      QuestCompletion.findOne({userId:userId, questId:questId}).execAsync()
+      .then(function(completion){
+        if(completion == null){
+          Quest.findByIdAsync(questId).then(quest=>{
+            QuestCompletion.createAsync({userId:userId, questId:questId, timestamp: new Date(), mapId:quest.mapId})
+            .then(function(result){
+                return res.status(200).end();
+            })
+            .catch(handleError(res));
+          })
+          .catch(handleError(res));
+        } else{
+          return res.status(200).end();
+        }
+      });
+    })
+    .catch(err => next(err));
+}
+  
+export function cancel(req, res){
+  var userId = req.user._id;
+  var questId = req.params.id;
+  if(questId === undefined){
+    return res.status(404).end();
+  }
+  
+  User.findOneAsync({ _id: userId }, '-salt -password')
+    .then(user => { // don't ever give out the password or salt
+      if (!user) {
+        return res.status(401).end();
+      }
+      QuestCompletion.findOne({userId:userId, questId:questId}).execAsync()
+      .then(function(completion){
+        if(completion){
+          return completion.removeAsync()
+          .then(() => {
+            res.status(204).end();
+          });
+        } else{
+         return res.status(200).end();
+        }
+      });
+      
+    })
+    .catch(err => next(err));
 }

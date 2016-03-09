@@ -6,7 +6,10 @@ class MainController {
 
   constructor($http, $scope, socket) {
     this.$http = $http;
-        
+  
+    $http.get('/api/articles/summary').then(response=>{
+      $scope.$parent.articles = response.data;
+    });
   
     $http.get('/api/comments').then(response => {
       $scope.$parent.comments = response.data;

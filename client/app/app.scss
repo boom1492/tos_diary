@@ -18,17 +18,22 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 // Component styles are injected through grunt
 // injector
 @import 'admin/admin.scss';
+@import 'article/article.scss';
 @import 'exp/exp.scss';
 @import 'main/main.scss';
 @import 'map/map.scss';
 @import 'quest/quest.scss';
+@import 'write-article/write-article.scss';
 @import '../components/footer/footer.scss';
 @import '../components/modal/modal.scss';
 @import '../components/oauth-buttons/oauth-buttons.scss';
 @import '../components/sidebar/sidebar.scss';
 // endinjector
 
-body { padding-top: 70px; }
+body {
+  padding-top: 70px;
+  font-family:notokr-regular !important;
+}
 
 .completed { 
   background: #ddd;
@@ -39,3 +44,8 @@ body { padding-top: 70px; }
 .notCompleted {
   color: #7e7e7e !important;
 }
+
+@import url("../assets/fonts/NotoKR-Regular/stylesheet.css"); 
+@import url("../assets/fonts/NotoKR-Bold/stylesheet.css"); 
+
+.notokr-black { font-family:notokr-black !important; }
