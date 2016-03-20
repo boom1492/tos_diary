@@ -11,6 +11,7 @@
 
 import _ from 'lodash';
 import Comment from './comment.model';
+import User from './../user/user.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -69,7 +70,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of Comments
 export function index(req, res) {
-  Comment.find().sort('-written').populate('author', 'name _id role').populate('mapId').limit(10).execAsync()
+  Comment.find().sort('-written').populate('author', 'name _id role').populate('mapId').limit(5).execAsync()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -115,8 +116,25 @@ export function update(req, res) {
 // Deletes a Comment from the DB
 export function destroy(req, res) {
   
-  Comment.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
+  var userId = req.user._id;
+    User.findOneAsync({ _id: userId }, '-salt -password')
+    .then(user => { // don't ever give out the password or salt
+      if (!user) {
+        return res.status(401).end();
+      }
+      Comment.findById(req.params.id).exec((err, comment)=>{
+        if(err){
+          res.status(500).send(err);
+        }
+        if(String(comment.author) === String(user._id) || user.role === 'admin'){
+         
+           comment.remove().then(()=>{
+              res.status(204).end();
+           });
+        }else{
+          return res.status(500).end();
+        }
+      });
+    })
+    .catch(err => next(err));
 }

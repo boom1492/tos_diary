@@ -64,14 +64,15 @@ function handleError(res, statusCode) {
 
 // Gets a list of Quests
 export function index(req, res) {
-  if(req.query.mapId == undefined){
-    res.status(404).end();
-    return null;
+  if(req.query.mapId == undefined || req.query.mapId.length === 0){
+    return res.status(404).end();
+  }else{
+    Quest.find({mapId:req.query.mapId}).sort('questName').populate('connectedQuests', 'questName npcName type _id level mapId').populate('preQuests', 'questName npcName type _id level mapId').execAsync()
+      .then(handleEntityNotFound(res))
+      .then(respondWithResult(res))
+      .catch(handleError(res));  
   }
   
-  Quest.find({mapId:req.query.mapId}).sort('questName').populate('connectedQuests', 'questName npcName type _id level').populate('preQuests', 'questName npcName type _id level').execAsync()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
 }
 
 // Gets a single Quest from the DB

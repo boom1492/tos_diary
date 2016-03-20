@@ -12,6 +12,6 @@
 
 <div class="modal-body">
   <div class='list-group'>
-    <a class='list-group-item' class="sortorder" ng-repeat="map in maps | filter:text" ng-href="/quest?mapId={{map._id}}" ng-click="clickItem(map._id);saveQuery();" target='_self'><span style='width:40px; display:inline-block;'>{{map.level}}</span><span>{{map.mapName}}</span><span style="float:right;"><img src="/assets/images/bakarine.png" style="width:16px; height:16px;" ng-show="map.warp"></span></a>
+    <a class='list-group-item' class="sortorder" ng-repeat="map in maps | filter:text" ng-href="/quest/{{map._id}}" ng-click="clickItem(map._id);saveQuery();" target='_self'><span style='width:40px; display:inline-block;'>{{map.level}}</span><span>{{map.mapName}}</span><span style="float:right;"><img src="/assets/images/bakarine.png" style="width:16px; height:16px;" ng-show="map.warp"></span></a>
   </ul>
 </div>

@@ -59,12 +59,12 @@
               <hr ng-hide="quest.preQuests == undefined || quest.preQuests.length == 0"/>
               <div ng-hide="quest.preQuests == undefined || quest.preQuests.length == 0">
                 <p>선행 퀘스트 : </p>
-                <div ng-repeat="preQuest in quest.preQuests" ><a href="#{{preQuest._id}}">[{{preQuest.level}}] {{preQuest.questName}}</a></div>
+                <div ng-repeat="preQuest in quest.preQuests" ><a href="/quest/{{preQuest.mapId}}#{{preQuest._id}}">[{{preQuest.level}}] {{preQuest.questName}}</a></div>
               </div>
               <hr ng-hide="quest.connectedQuests == undefined || quest.connectedQuests.length == 0"/>
               <div ng-hide="quest.connectedQuests == undefined || quest.connectedQuests.length == 0">
                 <p>연계 퀘스트 : </p>
-                <div ng-repeat="connectedQuest in quest.connectedQuests"><a href="#{{connectedQuest._id}}">[{{connectedQuest.level}}] {{connectedQuest.questName}}</a></div>
+                <div ng-repeat="connectedQuest in quest.connectedQuests"><a href="/quest/{{connectedQuest.mapId}}#{{connectedQuest._id}}">[{{connectedQuest.level}}] {{connectedQuest.questName}}</a></div>
               </div>
             </div>
           </div>
@@ -115,8 +115,8 @@
           <h5 class="list-group-heading">
             <strong>{{comment.author.name}}</strong> 
             <span class="label label-warning" ng-show="comment.author.role=='admin'">Admin</span>&nbsp;&nbsp;<span style="color:#7b7b7b">{{comment.written | date:'yyyy-MM-dd HH:mm:ss'}}</span>
-            <a ng-click="removeComment(comment)" ng-show="comment.author._id == getCurrentUser()._id" style="float:right;">
-                <span class="glyphicon glyphicon-trash"></span>
+            <a ng-click="removeComment(comment)"  style="float:right;">
+                <span class="glyphicon glyphicon-trash" ng-show="comment.author._id == getCurrentUser()._id || getCurrentUser().role === 'admin'"></span>
             </a>
           </h5>
           <span class="list-group-text" style="white-space:pre-line;overflow-wrap:break-word;">{{comment.message}}</span>

@@ -13,7 +13,7 @@
     </a>
     <div ng-show="group.isOpen" class="group_content">
       <div ng-repeat="map in group_maps | filter : {group: group.group} : true | orderBy: 'level'">
-        <a ng-href="/quest?mapId={{map._id}}" style="color:#ddd">
+        <a ng-href="/quest/{{map._id}}" style="color:#ddd">
           <span style="width:18px; display:inline-block;">
             <img src="/assets/images/bakarine.png" style="width:16px; height:16px;" ng-show="map.warp">
           </span>

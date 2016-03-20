@@ -45,7 +45,10 @@ body {
   color: #7e7e7e !important;
 }
 
-@import url('http://tos.demonic.kr/assets/fonts/NotoKR-Regular/stylesheet.css');
+.label {
+  padding: .3em .6em .2em;
+}
+@import url('../assets/fonts/NotoKR-Regular/stylesheet.css');
 
 
 .notokr-black { font-family:notokr-black !important; }

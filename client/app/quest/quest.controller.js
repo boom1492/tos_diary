@@ -4,17 +4,31 @@
 
 class QuestCtrl {
 
-  constructor($http, $scope, socket, $location, $cookies, Auth, Notification) {
+  constructor($http, $scope, socket, $stateParams, $state, $cookies, Auth, Notification, $location) {
     this.$http = $http;
-    //this.quests = [];
     this.map = {};
-    $scope.mapId = $location.search().mapId;
-    $scope.getCurrentUser = Auth.getCurrentUser;
-    
+    //$scope.mapId = $location.search().mapId;
+    $scope.mapId = $stateParams.mapId;
     $scope.$parent.resultExpCard = [];
     
-    $http.get('/api/quests?mapId=' + $scope.mapId).then(response => {
+    Auth.getCurrentUser(res=>{
+      $scope.currentUser = res;
+      
+      if($scope.currentUser._id != undefined){
+        $http.get('/api/quests/' + $scope.mapId + '?timestamp=' + new Date().getTime()).then(response=>{
+          var questIds = _.map(response.data, function(item){
+            return item.questId
+          });
+          for(var idx in $scope.$parent.quests){
+            if(_.contains(questIds, $scope.$parent.quests[idx]._id)){
+              $scope.$parent.quests[idx].done = true;
+            }
+          }
+        });
+      }
+    });
     
+    $http.get('/api/quests?mapId=' + $scope.mapId).then(response => {
       var tmpResultExpCard = [];
       
       $scope.$parent.quests = response.data;
@@ -23,7 +37,7 @@ class QuestCtrl {
         $scope.$parent.quests[i].selectionCnt = $scope.$parent.quests[i].compensations.filter(o=>o.type =='선택').length;
         $scope.$parent.quests[i].collapsed = true;
         
-        if($scope.getCurrentUser()._id == undefined){
+        if($scope.currentUser._id == undefined){
           $scope.$parent.quests[i].done = $cookies.get('quest.' + $scope.$parent.quests[i]._id);
         }
         
@@ -50,8 +64,6 @@ class QuestCtrl {
       
     }, response =>{
       
-      $location.path('/');
-      $location.url('/');
     });
     
     $http.get('/api/comments/' + $scope.mapId).then(response => {
@@ -89,23 +101,19 @@ class QuestCtrl {
     
     $http.get('/api/maps/' + $scope.mapId).then(response =>{
       this.map = response.data;
+      
+      if($scope.mapId == undefined || $scope.mapId == ''){
+        $state.go('main');
+      }
+    }, response =>{
+      alert('존재하지 않는 지도입니다.');
+      $state.go('main');
     });
     
-    if($scope.getCurrentUser()._id != undefined){
-      $http.get('/api/quests/' + $scope.mapId + '?timestamp=' + new Date().getTime()).then(response=>{
-        var questIds = _.map(response.data, function(item){
-          return item.questId
-        });
-        for(var idx in $scope.$parent.quests){
-          if(_.contains(questIds, $scope.$parent.quests[idx]._id)){
-            $scope.$parent.quests[idx].done = true;
-          }
-        }
-      });
-    }
+    
     
     $scope.check = function(quest){
-      if($scope.getCurrentUser()._id != undefined){
+      if($scope.currentUser._id != undefined){
         if(quest.done){
           $http.delete('/api/quests/' + quest._id).then(response =>{
             quest.done = false;
@@ -136,7 +144,7 @@ class QuestCtrl {
     }
     
     $scope.doneAll = function(){
-      if($scope.getCurrentUser()._id != undefined){
+      if($scope.currentUser._id != undefined){
         for(var idx in $scope.$parent.quests){
           $http.put('/api/quests/' + $scope.$parent.quests[idx]._id).then(response =>{
 
@@ -152,7 +160,7 @@ class QuestCtrl {
     }
     
     $scope.cancelAll = function(){  
-      if($scope.getCurrentUser()._id != undefined){
+      if($scope.currentUser._id != undefined){
         for(var idx in $scope.$parent.quests){
           $http.delete('/api/quests/' + $scope.$parent.quests[idx]._id).then(response =>{
           
