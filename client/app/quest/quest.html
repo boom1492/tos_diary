@@ -103,20 +103,20 @@
       <h3>유저 정보</h3>
       
       <form ng-submit="writeComment()" style="margin-bottom:10px">
-        <p style="text-align:center" ng-show="getCurrentUser()._id == undefined">댓글을 작성하려면 로그인하셔야 합니다.</p>
-        <div ng-hide="getCurrentUser()._id == undefined" style="margin-bottom:50px">
+        <p style="text-align:center" ng-show="currentUser._id == undefined">댓글을 작성하려면 로그인하셔야 합니다.</p>
+        <div ng-hide="currentUser._id == undefined" style="margin-bottom:50px">
           <textarea class='form-control' row='3' ng-model="commentMessage" style="resize:vertical;"></textarea>
 
           <button class="btn btn-primary" type="submit" style="float:right; margin-top:5px">작성</button>
         </div>
       </form>
       <div class="list-group">
-        <div href="#" class="list-group-item" ng-repeat="comment in comments | orderBy: '-written'" ng-class="{'mine': getCurrentUser()._id === comment.author._id}">
+        <div href="#" class="list-group-item" ng-repeat="comment in comments | orderBy: '-written'" ng-class="{'mine': currentUser._id === comment.author._id}">
           <h5 class="list-group-heading">
             <strong>{{comment.author.name}}</strong> 
             <span class="label label-warning" ng-show="comment.author.role=='admin'">Admin</span>&nbsp;&nbsp;<span style="color:#7b7b7b">{{comment.written | date:'yyyy-MM-dd HH:mm:ss'}}</span>
             <a ng-click="removeComment(comment)"  style="float:right;">
-                <span class="glyphicon glyphicon-trash" ng-show="comment.author._id == getCurrentUser()._id || getCurrentUser().role === 'admin'"></span>
+                <span class="glyphicon glyphicon-trash" ng-show="comment.author._id == currentUser._id || currentUser.role === 'admin'"></span>
             </a>
           </h5>
           <span class="list-group-text" style="white-space:pre-line;overflow-wrap:break-word;">{{comment.message}}</span>
