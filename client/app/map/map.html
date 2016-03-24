@@ -1,6 +1,6 @@
 <div class="worldmap container-fluid">
   <div class="map_block" ng-style="{'margin-top': map.location.x + 'px', 'margin-left': map.location.y + 'px'}" ng-repeat="map in block_maps">
-    <a ng-href="/quest?mapId={{map._id}}">
+    <a ng-href="/quest/{{map._id}}">
       <div class="map_name">{{map.mapName}}</div>
       <span style='float:left;'></span>
       
